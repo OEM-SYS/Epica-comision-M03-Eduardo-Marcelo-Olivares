@@ -14,13 +14,13 @@ const postSchema = new Schema(
       trim: true,
     },
     author: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+      type: Schema.ObjectId, ref: "User",
+    }
+   
+    ,
     comments: [
       { 
-        type: Schema.ObjectId, ref: "Comment"
+        type: Schema.ObjectId, ref: "Comment",
       }
     ],
     imageURL: {
@@ -41,5 +41,13 @@ const postSchema = new Schema(
     versionKey: false,
   }
 );
+
+/*
+ author: {
+      type: String,
+      required: true,
+      trim: true,
+    }
+*/
 //este modelo se utiliza en XXXXXXXXXXXX.js
 export default model("Post", postSchema);

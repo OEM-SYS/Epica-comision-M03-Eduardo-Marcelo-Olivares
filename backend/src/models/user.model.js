@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
@@ -28,5 +28,11 @@ const userSchema = new Schema(
     versionKey: false,
   }
 );
-//este modelo se utiliza en XXXXXXXXXXXX.js
+/*roles: [
+      {
+        ref: "Role",
+        type: Schema.Types.ObjectId,
+      },
+    ],*/
+//este modelo se utiliza en src/controllers/auth.controllers.js
 export default model("User", userSchema);
