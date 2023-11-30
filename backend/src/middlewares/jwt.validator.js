@@ -10,7 +10,7 @@ const {TokenExpires}=settingTokenExpiresIn();
 export function createAccessToken(payload) {
   return new Promise((resolve, reject) => {
     //console.log("scr/middlewares/jwt.validator.js ",settingTokenExpiresIn());
-    console.log("scr/middlewares/jwt.validator.js dump TokenExpires ",TokenExpires);
+   // console.log("scr/middlewares/jwt.validator.js dump TokenExpires ",TokenExpires);
     jwt.sign(
       payload,
       secret,

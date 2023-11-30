@@ -6,6 +6,8 @@ import cors from "cors";
 import {connectDB} from "./database/db.js";
 import {indexRoutes} from "./routes/index.routes.js";
 import {router as authRouter} from "./routes/auth.routes.js";
+import {router as postRouter} from "./routes/post.routes.js";
+import {router as commentRouter} from "./routes/comment.routes.js";
 
 const app=express();
 //funcion asincrona que conecta la base de datos
@@ -30,6 +32,8 @@ app.use(cookieParser());
 //aqui se importan las rutas
 app.use("/", indexRoutes);
 app.use("/api", authRouter);
+app.use("/api", postRouter);
+app.use("/api", commentRouter);
 
 
 // se utila Intercambio de recursos de origen cruzado(cors) para que permita 

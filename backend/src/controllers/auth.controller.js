@@ -60,7 +60,7 @@ export const login = async (req, res) => {
         });
       }
     } catch (error) {
-     // console.log("error catch ",error);
+     // console.log("src/controllers/auth.comtroler.js dump error catch ",error);
       return res.status(500).json({ message: "Failed to Login", error });
     }
   };

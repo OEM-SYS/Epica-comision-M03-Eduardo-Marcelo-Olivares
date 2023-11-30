@@ -1,0 +1,101 @@
+import Comment from "../models/comment.model.js";
+import User from "../models/user.model.js";
+import Post from "../models/post.model.js";
+
+export const getAllComment = async(req, res)=>{
+    //res.json({message:"TODOS LOS COMENTARIOS"});
+    try{
+        //################# deberia colocar?    .populate("post")
+        const allComment = await Comment.find().populate("author").populate("post");
+        res.status(200).json(allComment);
+    }
+    catch(error){
+        return res.status(400).json({ message: "Error when searching for Comments"});
+    }
+};
+
+
+export const getCommentByID = async(req, res)=>{
+    const {id}=req.params;
+    try{
+        //################# deberia colocar?    .populate("post")
+        const commentFound = await Comment.findById(id).populate("author").populate("post");;
+        if(!commentFound)
+            return res.status(404).json({ message: "Comment not Found"});
+
+        res.status(200).json(commentFound);
+    }
+    catch(error){
+        return res.status(400).json({ message: "Error when searching for a Comment"});
+    }
+};
+
+
+export const createComment = async(req, res)=>{
+    try{
+        const {author, description, }= req.body;
+        const postId= req.params.postId;
+       
+        // Para crear el comentario primero hay que Consultar si el Author existe 
+        const existingUser = await User.findById(author);
+        if (!existingUser) 
+            return res.status(404).json({ message: "User not Found" });
+ 
+        //Tambien consultar si existe el Posteo
+        const existingPost = await Post.findById(postId);
+        if (!existingPost)
+            return res.status(404).json({ message: 'Post not Found' });
+
+        // tener en cuenta que al crear el comentario esta incluido el enlace a post
+        const newComment = new Comment({ author, description, post: postId });
+        const commentSaved = await newComment.save();
+
+        // Añadir el comentario al array de comentarios del post
+         existingPost.comments.push({ idComment: postId });
+        //existingPost.comments.push(commentSaved._id);
+      
+       // Guardar el post actualizado
+        await existingPost.save();
+        
+        res.status(200).json(commentSaved);
+        }
+    catch(error){
+        console.log("src/controllers/comment.controler.js  createComment dump error catch \n",error);
+        return res.status(400).json({ message: "Error creating Comment"});
+    }
+};
+
+
+export const updateComment = async(req, res)=>{
+    const { description } = req.body;
+    const commentId = req.params.id;
+    try {
+        const updatedComment = await Comment.findByIdAndUpdate(
+            commentId,
+            { description },
+            { new: true }
+        );
+
+        if (!updatedComment)
+            return res.status(404).json({ error: "Comment not Found" });
+    
+        res.status(200).json(updatedComment);
+         }
+    catch(error){
+        return res.status(400).json({ message: "Error when updating for a Post"});
+    }
+};
+
+export const deleteComment = async (req, res) => {
+    const commentId = req.params.id;
+    try {
+      const deletedComment = await Comment.findByIdAndDelete(commentId);
+      if (!deletedComment)
+        return res.status(404).json({ error: "Comment not found" });
+
+      res.status(204).end();
+    } 
+    catch (error) {
+      res.status(400).json({ error: "Error when deleting a Comment" });
+    }
+  };

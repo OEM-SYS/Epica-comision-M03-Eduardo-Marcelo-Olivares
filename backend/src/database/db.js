@@ -8,7 +8,7 @@ export const connectDB = async () => {
   try {
     console.log("src/database/db.js Trying to connect Data Base on ",db);
     await mongoose.connect(db.localhost);
-    console.log("src/database/db.js Data Base is CONNECTED")
+    console.log("src/database/db.js Data Base is CONNECTED");
   } catch (error) {
     console.log(error);
   }
