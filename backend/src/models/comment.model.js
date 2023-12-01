@@ -12,11 +12,6 @@ const commentSchema = new Schema(
       required: true,
       trim: true,
     },
-    post: {
-      type: Schema.Types.ObjectId, 
-      ref: "Post",
-      required: true,
-    },
   },
   {
     versionKey: false,
@@ -24,3 +19,12 @@ const commentSchema = new Schema(
 );
 //este modelo se utiliza en XXXXXXXXXXXX.js
 export default model("Comment", commentSchema);
+
+/*
+post: {
+      type: Schema.Types.ObjectId, 
+      ref: "Post",
+      required: true,
+    },
+
+*/

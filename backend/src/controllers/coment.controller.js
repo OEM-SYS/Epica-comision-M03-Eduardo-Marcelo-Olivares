@@ -51,8 +51,8 @@ export const createComment = async(req, res)=>{
         const commentSaved = await newComment.save();
 
         // Añadir el comentario al array de comentarios del post
-         existingPost.comments.push({ idComment: postId });
-        //existingPost.comments.push(commentSaved._id);
+        // existingPost.comments.push({ idComment: postId });
+        existingPost.comments.push(commentSaved._id);
       
        // Guardar el post actualizado
         await existingPost.save();
@@ -86,14 +86,67 @@ export const updateComment = async(req, res)=>{
     }
 };
 
+//antes de eliminar debo recuperar el POST  en base al comment._id
+//no exportare por el momento esta funcion ya que es para uso de este controlador unicamente
+const findPostByCommentId = async (commentId) => {
+    try {
+        const post = await Post.findOne({ comments: commentId }).populate('comments').exec();
+        console.log("Post Found ",post);
+        return post;
+    } 
+    catch (error) {
+        console.error('Error when searching for post by comment ID:', error);
+        throw error;
+    }
+  };
+
+//Para eliminar el comentario utilizo primero la funcion de busqueda por commentId que devuelve el ID de post
+//no exportare por el momento esta funcion ya que es para uso de este controlador unicamente
+const findAndRemoveCommentId = async (commentId) => {
+    try {
+        // Buscar el post que contiene commentId
+        const post = await findPostByCommentId(commentId);
+        if (!post) {
+            console.log('The post containing the comment ID was not found.');
+            return null;
+        }
+        // Eliminar la commentId del array comments
+        const updatedPost = await Post.findOneAndUpdate(
+            { 
+            _id: post._id,
+            comments: commentId
+            },
+            { 
+            $pull: { comments: commentId }
+            },
+            { 
+            new: true
+            }
+        ).populate('comments').exec();
+  
+        console.log(updatedPost);
+        return updatedPost;
+        } 
+        catch (error) {
+            console.error('Error finding and deleting comment ID:', error);
+            throw error;
+        }
+  };
+
+
+
+// al borrar el comentario , se llama al funcion que tambien lo elimina del post donde fue publicado
 export const deleteComment = async (req, res) => {
     const commentId = req.params.id;
     try {
-      const deletedComment = await Comment.findByIdAndDelete(commentId);
-      if (!deletedComment)
-        return res.status(404).json({ error: "Comment not found" });
+        //primero se elimina el enlace al comentario en el modelo Post
+        findAndRemoveCommentId(commentId);
+        //luego se elimina el comentario
+        const deletedComment = await Comment.findByIdAndDelete(commentId);
+        if (!deletedComment)
+            return res.status(404).json({ error: "Comment not found" });
 
-      res.status(204).end();
+        res.status(204).end();
     } 
     catch (error) {
       res.status(400).json({ error: "Error when deleting a Comment" });

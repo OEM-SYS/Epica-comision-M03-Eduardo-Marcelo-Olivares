@@ -3,7 +3,7 @@ import Post from "../models/post.model.js";
 export const getAllPost = async(req, res)=>{
     //res.json({message:"TODOS LOS POSTEOS"});
     try{
-        const allPost = await Post.find().populate("author");
+        const allPost = await Post.find().populate("author").populate("comments");
         res.status(200).json(allPost);
     }
     catch(error){
