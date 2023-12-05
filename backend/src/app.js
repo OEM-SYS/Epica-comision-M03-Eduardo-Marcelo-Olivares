@@ -29,19 +29,24 @@ app.use(morgan("tiny"));//"tiny" "dev" "common" y otros mas, devuelven mayor o m
 //y manejar las cookies que se envían desde el cliente hasta el servidor.
 app.use(cookieParser());
 
+// se utila Intercambio de recursos de origen cruzado(cors) para que permita 
+//al servidor indicar cualquier dominio, esquema o puerto con un origen distinto 
+//del suyo  desde el que un navegador debería permitir la carga de recursos 
+//como como las imagenes entre otras cosas y para este proyecto en 
+//paraticular(avatarUSER , imagenURL)
+//app.use(cors());
+app.use(cors({ origin: 'http://localhost:3131' }));
+/*
+app.use(cors({
+    origin: 'http://localhost:3131',  // Reemplaza con la URL de tu aplicación de React
+    credentials: true,
+}));*/
 //aqui se importan las rutas
 app.use("/", indexRoutes);
 app.use("/api", authRouter);
 app.use("/api", postRouter);
 app.use("/api", commentRouter);
 
-
-// se utila Intercambio de recursos de origen cruzado(cors) para que permita 
-//al servidor indicar cualquier dominio, esquema o puerto con un origen distinto 
-//del suyo  desde el que un navegador debería permitir la carga de recursos 
-//como como las imagenes entre otras cosas y para este proyecto en 
-//paraticular(avatarUSER , imagenURL)
-app.use(cors());
 
 //app se utilizara en src/index.js
 export {app};
