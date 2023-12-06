@@ -54,10 +54,12 @@ export const login = async (req, res) => {
     try {
       const userFound = await User.findOne({ email });
       if (!userFound)
-        return res.status(400).json({ message: "Unregistered User" });
+        //return res.status(400).json({ message: "Unregistered User" });
+        return res.status(400).json({ errors: [{ type: "notFound", msg: "Unregistered User" }] });
       const matchPassword = await bcrypt.compare(password, userFound.password);
       if (!matchPassword) {
-        return res.status(400).json({ message: "Incorrect Password", token: null });
+        //return res.status(400).json({ message: "Incorrect Password", token: null });
+        return res.status(400).json({ errors: [{ type: "notFound", msg: "Incorrect Password", token :null }] });
       } else {
         const token = await createAccessToken({ id: userFound._id });
         res.cookie("token", token);
@@ -70,7 +72,8 @@ export const login = async (req, res) => {
       }
     } catch (error) {
      // console.log("src/controllers/auth.comtroler.js dump error catch ",error);
-      return res.status(500).json({ message: "Failed to Login", error });
+      //return res.status(500).json({ message: "Failed to Login", error });
+      return res.status(500).json({ errors: [{ type: "server", msg: "Failed to Login" ,error }] });
     }
   };
 

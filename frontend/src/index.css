@@ -6,3 +6,6 @@ body{
   background-color: black;
   color: antiquewhite;
 }
+.astroFont{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
