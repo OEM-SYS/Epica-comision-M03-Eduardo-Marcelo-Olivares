@@ -3,7 +3,7 @@ import  Register  from "./pages/Register";
 import  Login  from "./pages/login";
 import { AuthProvider } from "./context/AuthContext";
 
-
+//todos los componentes de adentro prodan acceder al Authprovider (signup, user,isAuthenticated)
 export const App= ()=>{
 return(
   <AuthProvider>
