@@ -5,7 +5,31 @@
 body{
   background-color: black;
   color: antiquewhite;
+  background-image: url(assets/img/jupiter.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
-.astroFont{
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+@font-face {
+  font-family: 'nebula-regular';
+  src: url(assets/fonts/Nebula-Regular.otf);
+}
+@font-face {
+  font-family: 'nebula-hollow';
+  src: url(assets/fonts/Nebula-Hollow.otf);
+}
+.astroFontRegular{
+  font-family: nebula-regular, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.astroFontHollow{
+  font-family: nebula-regular, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  opacity: 0.9;
 }

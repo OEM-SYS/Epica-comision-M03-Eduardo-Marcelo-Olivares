@@ -1,15 +1,16 @@
 import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-router-dom";
+import  Home  from "./pages/Home";
 import  Register  from "./pages/Register";
 import  Login  from "./pages/login";
 import { AuthProvider } from "./context/AuthContext";
-
+import Footer from "./components/footer"
 //todos los componentes de adentro prodan acceder al Authprovider (signup, user,isAuthenticated)
 export const App= ()=>{
 return(
   <AuthProvider>
     <Router>
         <Routes>
-          <Route path="/" element={<h1>Home</h1>}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/profile" element={<h1>profile</h1>}/>
@@ -18,6 +19,8 @@ return(
           <Route path="/viewpost" element={<h1>view Post</h1>}/>
         </Routes>
     </Router>
+    <Footer />
   </AuthProvider>
+  
   );
 };

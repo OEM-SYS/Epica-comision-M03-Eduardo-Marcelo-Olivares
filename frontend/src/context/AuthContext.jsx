@@ -1,4 +1,4 @@
-import {createContext, useContext , useState} from "react";
+import {createContext, useContext , useEffect, useState} from "react";
 import { registerRequest, loginRequest} from "../api/auth";
 export const AuthContext=createContext();
 
@@ -47,6 +47,19 @@ export const AuthProvider = ({children})=>{
             setErrors(error.response.data);
         }
     };
+
+useEffect(()=>{
+    try{
+        if(errors.errors.length > 0){
+            const timer = setTimeout(()=>{
+                setErrors([])
+            },3000);
+            return ()=>clearTimeout(timer);
+        }
+    }
+    catch(err){console.log("?????authContext.jsx?????????no hay errores?",errors);}
+   
+},[errors]);
 
     //En este contexto, todos los componentes que estan dentro (signup signin user isAuthenticated errors) 
     //se exportan para que esten disponibles en toda la aplicacion

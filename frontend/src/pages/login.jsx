@@ -7,7 +7,7 @@ function Login(){
 
        const { register, handleSubmit, formState:{errors} } = useForm();
        //le damos una alias e Errors para poder identificarlo mejor
-       const {signin, isAuthenticated, errors: registerErrors } = useAuth();
+       const {signin, isAuthenticated, errors:loginErrors } = useAuth();
        //console.log("Errores que vienen del backend \n",registerErrors); 
        const navigate = useNavigate();
      
@@ -23,9 +23,9 @@ function Login(){
 
     return(
         <div className="flex h-screen items-center justify-center">
-            <div className=" bg-zinc-800 max-w-md p-8 rounded-md">
+            <div className=" bg-zinc-800 bg-opacity-25 max-w-md p-8 rounded-md ">
                 <form action="">
-                    <h1 className="text-3xl text-center text-blue-400 font-semibold mb-5 astroFont">LOGIN</h1>
+                    <h1 className="text-3xl text-center text-blue-400 font-semibold mb-5 astroFontRegular">LOGIN</h1>
                     <input type="email" {...register("email",{required:true})}
                     placeholder="email"
                     className="w-full text-3x1 bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
@@ -41,8 +41,8 @@ function Login(){
                 </p>
                 <div className="py-4">
                   {
-                  registerErrors && registerErrors.errors && (
-                    registerErrors.errors.map((error, i)=>(
+                  loginErrors && loginErrors.errors && (
+                    loginErrors.errors.map((error, i)=>(
                       <div className="bg-red-500  text-antique-500 px-2" key={i}>
                         {error.msg}
                       </div>
