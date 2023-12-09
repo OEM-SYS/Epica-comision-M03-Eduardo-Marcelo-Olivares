@@ -1,5 +1,7 @@
 import {createContext, useContext , useEffect, useState} from "react";
-import { registerRequest, loginRequest} from "../api/auth";
+import { registerRequest, loginRequest, verifyToken} from "../api/auth";
+import Cookies from "js-cookie";
+
 export const AuthContext=createContext();
 
 export const useAuth = ()=>{
@@ -48,23 +50,61 @@ export const AuthProvider = ({children})=>{
         }
     };
 
+    //aqui va el logout del usuario
+    const signout = async () => {
+        Cookies.remove("token");
+        setIsAuthenticated(false);
+        setUser(null);
+    };
+
+
+//al pasar 4 segundos se borran los errores 
 useEffect(()=>{
     try{
         if(errors.errors.length > 0){
             const timer = setTimeout(()=>{
                 setErrors([])
-            },3000);
+            },4000);
             return ()=>clearTimeout(timer);
         }
     }
-    catch(err){console.log("?????authContext.jsx?????????no hay errores?",errors);}
+    catch(err){
+        //console.log("?????authContext.jsx?????????no hay errores?",errors);
+    }
    
 },[errors]);
+
+//manejo de cookies
+useEffect(()=>{
+    async function verifyLogin(){
+        const cookie=Cookies.get();
+        console.log(">>>>>mostrando cookies>>>>>>",cookie);
+        if(cookie.token){
+            try{
+                const res =await verifyToken(cookie.token);//verificar en el backend el cookie.token
+                console.log("resultado de verificar el token en el backend ", res);
+                if(res.data){
+                    setIsAuthenticated(true);
+                    setUser(res.data);
+                }else{
+                    setIsAuthenticated(false);
+                }
+            }catch(error){
+                console.log("error al intentar verificar token en el backend ", error);
+                setIsAuthenticated(false);
+                setUser(null);
+            }
+        }  
+
+    }
+    //llamo a la funcion para verificar el token en el backend
+    verifyLogin();
+},[]);
 
     //En este contexto, todos los componentes que estan dentro (signup signin user isAuthenticated errors) 
     //se exportan para que esten disponibles en toda la aplicacion
     return(
-        <AuthContext.Provider value={{ signup, signin ,user, isAuthenticated, errors}}>
+        <AuthContext.Provider value={{ signup, signin, signout ,user, isAuthenticated, errors}}>
             {children}
         </AuthContext.Provider>
         );

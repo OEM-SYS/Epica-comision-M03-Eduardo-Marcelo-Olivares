@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form";
 import {useAuth} from "../context/AuthContext.jsx";
 import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import NavbarPublic from "../components/NavbarPublic";
 
 function Register(){
 
@@ -12,7 +13,7 @@ function Register(){
        const navigate = useNavigate();
      
        useEffect(() => {
-         if (isAuthenticated) navigate("/allposts");
+         if (isAuthenticated) navigate("/profile");
        }, [isAuthenticated]);
      
        const onSubmit = handleSubmit(async (values) => {
@@ -22,6 +23,8 @@ function Register(){
 
 
     return(
+      <>
+        <NavbarPublic/>
         <div className="flex h-screen items-center justify-center">
             <div className=" bg-zinc-800 bg-opacity-25 max-w-md p-8 rounded-md">
                 <form action="">
@@ -30,14 +33,14 @@ function Register(){
                     className="w-full text-3x1 bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
                     <input type="email" {...register("email",{required:true})}
                     placeholder="email"
-                    className="w-full text-3x1 bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
+                    className="w-full bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
                     <input type="password" {...register("password",{required:true})} 
                     placeholder="Password"
-                    className="w-full text-3x1 bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
+                    className="w-full bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
                     <input type="text" name="avatarURL" 
                     {...register("avatarURL",{required:false})}
                     placeholder="avatar URL"
-                    className="w-full text-3x1 bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
+                    className="w-full bg-zinc-600 text-antiquewhite px4 py-2 my-2 rounded-sm px-2"/>
                     <button className="bg-blue-600 h-10 px-7 font-semibold text-antique-500 rounded-sm  my-5" 
                     onClick={onSubmit}>Register</button>
                 </form>
@@ -58,6 +61,7 @@ function Register(){
                 </div>
             </div>
         </div>
+      </>
     );
 };
 export default Register;

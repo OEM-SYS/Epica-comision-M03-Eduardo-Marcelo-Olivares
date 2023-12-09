@@ -2,6 +2,8 @@
 import User from "../models/user.model.js";
 //se importa Bcrypt para la función de hashing de passwords
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import {settingSecretToken} from "../config/dotenv.js";
 import { createAccessToken } from '../middlewares/jwt.validator.js';
 
 //Register
@@ -101,3 +103,9 @@ export const login = async (req, res) => {
       res.status(500).json({ message: "Error in Profile", error });
     }
   };
+
+const {secret}=settingSecretToken();
+  export const verifyToken= async (req, res) => {
+
+  };
+

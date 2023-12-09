@@ -35,12 +35,14 @@ app.use(cookieParser());
 //como como las imagenes entre otras cosas y para este proyecto en 
 //paraticular(avatarUSER , imagenURL)
 //app.use(cors());
-app.use(cors({ origin: 'http://localhost:3131' }));
 /*
+app.use(cors({ origin: 'http://localhost:3131' }));
+*/
 app.use(cors({
-    origin: 'http://localhost:3131',  // Reemplaza con la URL de tu aplicación de React
+    origin: 'http://localhost:3131',
     credentials: true,
-}));*/
+}))
+
 //aqui se importan las rutas
 app.use("/", indexRoutes);
 app.use("/api", authRouter);
