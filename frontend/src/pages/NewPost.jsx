@@ -5,7 +5,7 @@ function NewPost(){
     return(
         <>
         <NavbarPrivate/>
-        <h1>NewPost</h1>
+        <h1>NewPost ...........  YA NO SE USA ......... </h1>
         </>
     );
 };

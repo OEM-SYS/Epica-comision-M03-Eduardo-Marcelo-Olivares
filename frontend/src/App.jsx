@@ -2,7 +2,7 @@ import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-route
 import  Home  from "./pages/Home";
 import  Register  from "./pages/Register";
 import  Login  from "./pages/login";
-import  NewPost from "./pages/NewPost";
+import  {PostForm} from "./pages/PostForm";
 import  Posts  from "./pages/Posts";
 import  Post  from "./pages/Post";
 import PostsPrivate from "./pages/PostsPrivate";
@@ -10,12 +10,13 @@ import  Profile  from "./pages/Profile";
 import { AuthProvider } from "./context/AuthContext";
 import Footer from "./components/footer"
 import { PrivateRoutes } from "./routes/PrivateRoutes";
-
+import { PostProvider } from "./context/PostContext";
 
 //todos los componentes de adentro prodan acceder al Authprovider (signup, user,isAuthenticated)
 export const App= ()=>{
 return(
   <AuthProvider>
+    <PostProvider>
     <Router>
         <Routes>
             <Route path="/" element={<Home/>}/>
@@ -27,11 +28,12 @@ return(
           <Route element={<PrivateRoutes/>}>
             <Route path="/postsprivate" element={<PostsPrivate/>}/>
             <Route path="/profile" element={<Profile/>}/>
-            <Route path="/newpost" element={<NewPost/>}/>
+            <Route path="/newpost" element={<PostForm/>}/>
           </Route>
         </Routes>
     </Router>
     <Footer />
+    </PostProvider>
   </AuthProvider>
   
   );

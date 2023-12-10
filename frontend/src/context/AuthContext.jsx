@@ -43,6 +43,8 @@ export const AuthProvider = ({children})=>{
             setUser(res.data);
             //se dice que el usuario esta autenticado
             setIsAuthenticated(true);
+            //almacenamiento en el localstore
+            localStorage.setItem("token",res.data.message);
         }catch(error){
             console.log(error.response);
             //guardamos el error para poder llevarlo al AuthContext para quee este disponible tambien
@@ -53,6 +55,7 @@ export const AuthProvider = ({children})=>{
     //aqui va el logout del usuario
     const signout = async () => {
         Cookies.remove("token");
+        localStorage.removeItem("token");
         setIsAuthenticated(false);
         setUser(null);
     };
@@ -78,11 +81,14 @@ useEffect(()=>{
 useEffect(()=>{
     async function verifyLogin(){
         const cookie=Cookies.get();
-        console.log(">>>>>mostrando cookies>>>>>>",cookie);
+        //console.log(">>>>>mostrando cookies>>>>>>",cookie);
+        //console.log(">>>>>mostrando cookies token>>>>>>",cookie.token);
+
         if(cookie.token){
             try{
                 const res =await verifyToken(cookie.token);//verificar en el backend el cookie.token
                 console.log("resultado de verificar el token en el backend ", res);
+                
                 if(res.data){
                     setIsAuthenticated(true);
                     setUser(res.data);

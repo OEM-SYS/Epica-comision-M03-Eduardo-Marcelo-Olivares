@@ -7,8 +7,8 @@ const NavbarPublic = () => {
     <div className="flex justify-between items-center">
     <div>
         <Link to="/">
-            <spam className='astroFontHollow text-4xl text-blue-400 font-bold'>A</spam>
-            <spam className='astroFontRegular text-4xl text-blue-400'>T</spam>
+            <span className='astroFontHollow text-4xl text-blue-400 font-bold'>A</span>
+            <span className='astroFontRegular text-4xl text-blue-400'>T</span>
         </Link>
     </div>
     <div className="flex-grow text-center">

@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {useAuth} from '../context/AuthContext';
 const NavbarPrivate = () => {
-    const {signout} = useAuth();
+    const {signout, user} = useAuth();
   return (
         <nav className="navbar p-1">
     <div className="flex justify-between items-center">
     <div>
         <Link to="/">
-            <spam className='astroFontHollow text-4xl text-blue-400 font-bold'>A</spam>
-            <spam className='astroFontRegular text-4xl text-blue-400'>T</spam>
+            <span className='astroFontHollow text-4xl text-blue-400 font-bold'>A</span>
+            <span className='astroFontRegular text-4xl text-blue-400'>T</span>
         </Link>
     </div>
     <div className="flex-grow text-center">
@@ -22,9 +22,10 @@ const NavbarPrivate = () => {
         <Link to="/profile" className="text-white">My Profile</Link>
     </div>
     <div className="space-x-4">
-        <Link to="/login" className="bg-green-500 font-semibold px-7 text-antique-500 rounded-sm "
+        <span className='astroFontRegular text-3xl text-blue-400'>{user.username}</span>
+        <a href="/login" className="bg-green-500 font-semibold px-7 text-antique-500 rounded-sm "
         onClick={()=>signout()}
-        >Logout</Link>
+        >Logout</a>
     </div>
     </div>
     </nav>
