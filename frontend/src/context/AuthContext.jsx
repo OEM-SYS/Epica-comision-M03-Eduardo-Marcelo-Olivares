@@ -28,6 +28,13 @@ export const AuthProvider = ({children})=>{
             setUser(res.data);
             //se dice que el usuario esta autenticado
             setIsAuthenticated(true);
+            
+
+            //almacenamiento en el localstore
+            //localStorage.setItem("token",res.data.message);
+            console.log(">>>>>>>>>>registrando usuario nuevo>>>>>>>>",res.cookie);
+
+            
         }catch(error){
             console.log(error.response);
             //guardamos el error para poder llevarlo al AuthContext para quee este disponible tambien

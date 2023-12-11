@@ -5,7 +5,7 @@ function PostsPrivate(){
     return(
         <>
         <NavbarPrivate/>
-        <h1>all Posts Private</h1>
+        <h1>all Posts Private?????</h1>
         </>
     );
 };

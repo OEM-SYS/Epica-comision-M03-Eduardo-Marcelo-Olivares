@@ -10,12 +10,37 @@ export const PostForm= () => {
 
     const {user}= useAuth();
 
+    const navigate = useNavigate();
+
     const {createPost, getAllPosts, getPostById, updatePost,}=usePosts();
 
-    const onSubmit= handleSubmit((data)=>{
-        createPost(data);
-        handleReset();
-    });
+    const onSubmit= handleSubmit(async (data) => {
+        try {
+          const response = await createPost(data);
+      
+          // Accede al valor de status directamente desde la respuesta
+          const status = response.status;
+          console.log('Status:', status);
+      
+          if (status === 200) {
+            // La solicitud fue exitosa, puedes realizar acciones adicionales aquí
+            console.log('Post creado exitosamente. ID:', response.data._id);
+      
+            // Restablecer el formulario si es necesario
+            handleReset();
+
+            //ir a mostrar el posteo
+            navigate(`/postprivate/${response.data._id}`);
+          } else {
+            // La solicitud no fue exitosa, manejar el error si es necesario
+            console.log(`Hubo un error al crear el post. Status: ${status}  Mensaje de error: ${response.data.message}`);
+          }
+        } catch (error) {
+          // Manejar errores si la promesa se rechaza
+          //console.error('Error:', error.response.data.message);
+          console.error('Error:', error);
+        }
+      });
 
     const handleReset = () => {
          // Solo resetear los campos innesesarios (en este caso, "title", "description" y "imageURL") author debe mantener la ID

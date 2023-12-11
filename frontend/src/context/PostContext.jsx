@@ -19,6 +19,7 @@ export const PostProvider = ({children})=>{
         //console.log(post);
         const res = await createPostReq(post);
         //console.log(res);
+        return res;
     };
 
     //Buscar todos los posts
