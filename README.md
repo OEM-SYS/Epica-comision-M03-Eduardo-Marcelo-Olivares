@@ -20,5 +20,15 @@ Este sitio contiene dos carpetas
 
 
 
+### CAPTURAS DEL SITIO ASTRONOMIC TRAVELS
 
-![EDUARDO M OLIVARES](https://drive.google.com/uc?id=15gjvnSNF-hzrUce-P7_4-ZG7V9Y51mtI){:width="50%"}
+![PAGINA PRINCIPAL](https://drive.google.com/uc?id=1TQ8ELvic18FUfML0kKC_5ZmMtYUn0Vo4)
+![REGISTRO](https://drive.google.com/uc?id=15bcEKFXoZTyUE-KrnyqjzASPKGtlnlzm)
+![LOGIN](https://drive.google.com/uc?id=14H1rprfWkTAFjW7DVADAlSmj_2GGmorE)
+![POSTEO Y COMENTARIOS](https://drive.google.com/uc?id=1wjvKXDbCuZencMtdTK7cSNkF63pi2WSG)
+
+### ESTE SITIO FUE DISEÑADO POR
+
+![EDUARDO M OLIVARES](https://drive.google.com/uc?id=15gjvnSNF-hzrUce-P7_4-ZG7V9Y51mtI)
+
+contacto: eduardomarceloolivares@gmail.com
