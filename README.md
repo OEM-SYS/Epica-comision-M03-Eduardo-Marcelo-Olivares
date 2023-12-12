@@ -21,4 +21,4 @@ Este sitio contiene dos carpetas
 
 
 
-![EDUARDO M OLIVARES](https://drive.google.com/uc?id=15gjvnSNF-hzrUce-P7_4-ZG7V9Y51mtI)
+![EDUARDO M OLIVARES](https://drive.google.com/uc?id=15gjvnSNF-hzrUce-P7_4-ZG7V9Y51mtI){:width="50%"}
