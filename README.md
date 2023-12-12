@@ -17,3 +17,8 @@ La resolución de esta problemática requerió la utilización de tecnologías d
 Este sitio contiene dos carpetas
 - Carpeta BACKEND tiene un archivo README.md que explica como hacer para que funcione la API
 - Cartepa FRONTEND tiene un archivo README.md ue explica como hacer para que funcione la vista
+
+
+
+
+![EDUARDO M OLIVARES](https://drive.google.com/uc?id=15gjvnSNF-hzrUce-P7_4-ZG7V9Y51mtI)
