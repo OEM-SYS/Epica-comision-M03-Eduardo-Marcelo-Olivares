@@ -27,7 +27,7 @@ export const getAllPostByUser= async(req, res)=>{
 export const getPostByID = async(req, res)=>{
     const {id}=req.params;
     try{
-        const postFound = await Post.findById(id).populate("author");
+        const postFound = await Post.findById(id).populate("author").populate("comments").populate("comments.author");
         if(!postFound)
             return res.status(404).json({ message: "Post not Found"});
 

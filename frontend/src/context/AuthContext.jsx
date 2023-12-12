@@ -1,5 +1,5 @@
 import {createContext, useContext , useEffect, useState} from "react";
-import { registerRequest, loginRequest, verifyToken} from "../api/auth";
+import { registerRequest, loginRequest, verifyToken, findUserById} from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext=createContext();
@@ -67,6 +67,17 @@ export const AuthProvider = ({children})=>{
         setUser(null);
     };
 
+    //Buscar User por Id
+    const getUsertById = async (id) => {
+        try {
+        const res = await findUserById(id);
+        // console.log(res);
+        //retornamos para que lo pueda ver el Usuario donde se necesite
+        return res.data;
+        } catch (error) {
+        console.log("}}}}}}}}}}}}}}}}}}",error);
+        }
+    };
 
 //al pasar 4 segundos se borran los errores 
 useEffect(()=>{
@@ -117,7 +128,7 @@ useEffect(()=>{
     //En este contexto, todos los componentes que estan dentro (signup signin user isAuthenticated errors) 
     //se exportan para que esten disponibles en toda la aplicacion
     return(
-        <AuthContext.Provider value={{ signup, signin, signout ,user, isAuthenticated, errors}}>
+        <AuthContext.Provider value={{ signup, signin, signout ,user, isAuthenticated, errors, getUsertById }}>
             {children}
         </AuthContext.Provider>
         );

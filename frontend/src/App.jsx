@@ -27,9 +27,11 @@ return(
             <Route path="/posts" element={<Posts/>}/>
             <Route path="/post" element={<Post/>}/>
 
+            <Route path="/postprivate/:id" element={<PostPrivate/>}/> 
+
           <Route element={<PrivateRoutes/>}>
             <Route path="/newpost" element={<PostForm/>}/>
-            <Route path="/postprivate/:id" element={<PostPrivate/>}/>            
+                       
 
             <Route path="/postsprivate" element={<PostsPrivate/>}/>
             <Route path="/profile" element={<Profile/>}/>

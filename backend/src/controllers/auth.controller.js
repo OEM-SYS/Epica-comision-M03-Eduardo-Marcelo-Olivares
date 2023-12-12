@@ -70,6 +70,7 @@ export const login = async (req, res) => {
           id: userFound.id,
           username: userFound.username,
           email: userFound.email,
+          avatarURL:userFound.avatarURL,
         });
       }
     } catch (error) {
@@ -97,6 +98,7 @@ export const login = async (req, res) => {
         id: userFound.id,
         username: userFound.username,
         email: userFound.email,
+        avatarURL:userFound.avatarURL,
       });
     } catch (error) {
       console.log("src/controllers/auth.comtroler.js   profile dump error en catch ",error);
@@ -130,3 +132,16 @@ export const verifyToken= async (req, res) => {
     });
   };
 
+  export const getUserByID = async(req, res)=>{
+    const {id}=req.params;
+    try{
+        const userFound = await User.findById(id);
+        if(!userFound)
+            return res.status(404).json({ message: "User not Found"});
+
+        res.status(200).json(userFound);
+    }
+    catch(error){
+        return res.status(400).json({ message: "Error when searching for a User"});
+    }
+};

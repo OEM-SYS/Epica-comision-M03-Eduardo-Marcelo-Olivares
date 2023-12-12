@@ -13,3 +13,6 @@ export const loginRequest= async(user)=>axios.post(`/login`, user);
 
 //verificar el token desde el backend
 export const verifyToken = ()=>axios.get("/verifyToken");
+
+//esta es la ruta en el backend para buscar un usuario por ID 
+export const findUserById= async(id)=>axios.get(`/finduser/${id}`);

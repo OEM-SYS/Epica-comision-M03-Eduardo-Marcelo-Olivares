@@ -21,8 +21,14 @@ const NavbarPrivate = () => {
     <div className="flex-grow text-center">
         <Link to="/profile" className="text-white">My Profile</Link>
     </div>
-    <div className="space-x-4">
+    <div className="flex space-x-4 items-center text-center">
         <span className='astroFontRegular text-3xl text-blue-400'>{user.username}</span>
+
+        <img 
+        src={user.avatarURL}
+        className='w-10 h10 rounded-full object-cover'
+        />
+
         <a href="/login" className="bg-green-500 font-semibold px-7 text-antique-500 rounded-sm "
         onClick={()=>signout()}
         >Logout</a>
