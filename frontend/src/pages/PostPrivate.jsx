@@ -60,6 +60,34 @@ export const PostPrivate= () => {
         }
       };
 
+      const onSubmit = (data) => {
+        //Desestructuro para filtrar los datos que  no necesito
+        const { author, authorAvatar, createdAt, ...postData } = data;
+        // Llama a la función handleUpdate con el ID del post y los datos del formulario
+        console.log(">>>>>>>datos a modificar ",postData);
+        handleUpdate(id, postData);
+      };
+
+      const handleUpdate= async (postId, post) => {
+        try {
+        console.log(">>>>>>>modificar este post: ",postId);
+          // Lógica para eliminar el post (puedes mantener tu función deletePost)
+          await updatePost(postId, post);
+    
+          // Después de eliminar el post, redirige a /posts
+          //navigate('/posts');
+        } catch (error) {
+          console.error('Error updating  post:', error.message);
+          // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+        }
+      };
+
+    //con esto se muestran los botones Save y Cancel cuando es true
+    //por defecto es false y se muestran los botones Edit y Delete
+    const [isEditing, setIsEditing] = useState(false);
+    const handleEnablePost = () => {
+        setIsEditing(true);
+    };
     // Nuevo estado para almacenar comentarios inicia con arreglo vacio
     //no olvidar importar useState de react
     const [comments, setComments] = useState([]);
@@ -131,7 +159,7 @@ export const PostPrivate= () => {
             <div className="flex h-screen items-center justify-center">
                 <div className=" bg-zinc-800 bg-opacity-25 max-w-md p-8 rounded-md ">
                     <h1 className="text-3xl text-center text-blue-400 font-semibold mb-5 astroFontRegular">VIEW POST</h1>
-                    
+                    <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex items-center space-x-4">
                         <label>Author</label>
                             {authorAvatar && (
@@ -174,6 +202,16 @@ export const PostPrivate= () => {
                         />
 
                         <label>Image</label>
+                        {isEditing && (
+                            <input
+                                className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                                type="text" 
+                                placeholder="Image URL"
+                                {...register("imageURL")}
+                                autoFocus
+                            />
+                        )}
+
                         {/* Utiliza directamente el valor de la imagen para el atributo src */}
                         {imageURL && (
                             <img
@@ -199,24 +237,42 @@ export const PostPrivate= () => {
                         {/*bloque botones*/}
                         {canEditAndDelete && (
                         <div className="flex justify-between items-center">
-                            <button
-                                className="bg-yellow-500 font-semibold px-7 text-antique-500 rounded-sm "
-                                type="submit"
-                            >
+                            {isEditing ? (
+                                <>
+                                <button
+                                    className="bg-yellow-500 font-semibold px-7 text-antique-500 rounded-sm"
+                                    onClick={() => setIsEditing(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="bg-green-500 font-semibold px-7 text-antique-500 rounded-sm"
+                                    
+                                >
+                                    Save
+                                </button>
+                                </>
+                            ) : (
+                                <button
+                                className="bg-yellow-500 font-semibold px-7 text-antique-500 rounded-sm"
+                                onClick={handleEnablePost}
+                                >
                                 Edit
-                            </button>
+                                </button>
+                            )}
                             <button
-                                className="bg-red-500 font-semibold px-7 text-antique-500 rounded-sm "
-                                
-                                onClick={() => handleDelete(id)}    
+                                className={`bg-red-500 font-semibold px-7 text-antique-500 rounded-sm ${
+                                isEditing ? 'invisible' : ''
+                                }`}
+                                onClick={() => handleDelete(id)}
                             >
                                 Delete
                             </button>
+                            
                         </div>
                         )}
-
-
-                    
+                    </form>                   
                 </div>
             </div>
 

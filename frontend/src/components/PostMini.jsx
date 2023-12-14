@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const PostMini = ({ post }) => {
   const { deletePost } = usePosts();
-  console.log(post);
+  //console.log(post);
 
   return (
     <div className="flex items-center justify-center">
