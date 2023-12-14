@@ -71,6 +71,7 @@ export const login = async (req, res) => {
           username: userFound.username,
           email: userFound.email,
           avatarURL:userFound.avatarURL,
+          createdAt:userFound.createdAt,
         });
       }
     } catch (error) {
@@ -99,6 +100,7 @@ export const login = async (req, res) => {
         username: userFound.username,
         email: userFound.email,
         avatarURL:userFound.avatarURL,
+        createdAt:userFound.createdAt,
       });
     } catch (error) {
       console.log("src/controllers/auth.comtroler.js   profile dump error en catch ",error);

@@ -19,7 +19,7 @@ export const settingDotEnvDb = () => {
 //settingSecretToken se utilizara en 
 //palabra secreta del token 
   export const settingSecretToken = () => {
-    return { secret: process.env.SECRET };
+    return { secret: process.env.SECRET || "secret"};
   };
 
 //settingTokenExpiresIn se utilizara en src/middlewares/jwt.validator.js

@@ -13,8 +13,8 @@ function Login(){
     const navigate = useNavigate();
   
     useEffect(() => {
-      //if (isAuthenticated) navigate("/posts");
-      if (isAuthenticated) navigate("/postPRIVATE/6567bc49bbe35624b7c9af05");
+      if (isAuthenticated) navigate("/posts");
+      //if (isAuthenticated) navigate("/postPRIVATE/6567bc49bbe35624b7c9af05");
     }, [isAuthenticated]);
   
     const onSubmit = handleSubmit(async (values) => {

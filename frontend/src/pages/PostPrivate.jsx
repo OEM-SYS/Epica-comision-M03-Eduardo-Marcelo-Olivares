@@ -47,68 +47,77 @@ export const PostPrivate= () => {
     return date.toLocaleString('es-ES', options);
     };
 
+    const handleDelete = async (postId) => {
+        try {
+          // Lógica para eliminar el post (puedes mantener tu función deletePost)
+          await deletePost(postId);
+    
+          // Después de eliminar el post, redirige a /posts
+          navigate('/posts');
+        } catch (error) {
+          console.error('Error deleting post:', error.message);
+          // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+        }
+      };
+
     // Nuevo estado para almacenar comentarios inicia con arreglo vacio
     //no olvidar importar useState de react
     const [comments, setComments] = useState([]);
     const [canEditAndDelete, setCanEditAndDelte] = useState(false);
     const [commentsWithUsernames, setCommentsWithUsernames] = useState([]);
-
     //useEffect para traer los posteos cuando se ejecuta esta pagina
     // Obtener los datos los post
-    useEffect(() => {
-        const fetchData = async () => {
-        try {
-            const response = await getPostById(id);
-            console.log(">>>>>contenido de response getPostById(id) >>>>>>",response);
-            //console.log(">>>>>contenido author >>>>>>",response.author.username);
-            //console.log(">>>>>>contenido createdAt",response.createdAt);
-            // Llena los campos del formulario con los datos obtenidos
-            if(UserIdLogin==response.author._id){
-                console.log("el autor y el usuario es el mismo!!! :) ",UserIdLogin,"  ",response.author._id);
-                setCanEditAndDelte(true);
+        useEffect(() => {
+            const fetchData = async () => {
+            try {
+                const response = await getPostById(id);
+                console.log(">>>>>contenido de response getPostById(id) >>>>>>",response);
+                //console.log(">>>>>contenido author >>>>>>",response.author.username);
+                //console.log(">>>>>>contenido createdAt",response.createdAt);
+                // Llena los campos del formulario con los datos obtenidos
+                if(UserIdLogin==response.author._id){
+                    console.log("el autor y el usuario es el mismo!!! :) ",UserIdLogin,"  ",response.author._id);
+                    setCanEditAndDelte(true);
+                }
+                else{
+                    console.log("el autor y el usuario NO es el mismo!!! :( ",UserIdLogin,"  ",response.author._id);
+                }
+
+                //se almacena en el ESTADO comments  , los comentarios traidos en la respuesta
+                setComments(response.comments);
+
+                setValue("title", response.title);
+                setValue("author", response.author.username);
+                setValue("authorAvatar", response.author.avatarURL);
+                setValue("description", response.description);
+                setValue("imageURL", response.imageURL);
+                setValue("createdAt", formattedDate(response.createdAt));
+                //setValue("comments", response.comments);
+
+                //###########################################
+                // Consulta adicional para obtener usernames de los autores de los comentarios
+                const commentsData = await Promise.all(
+                    response.comments.map(async (comment) => {
+                        console.log("###############los usuarios######", comment.author);
+                    const userFinded = await getUsertById(comment.author);
+                    return {
+                        ...comment,
+                        authorUsername: userFinded.username,
+                        avatarUser: userFinded.avatarURL,
+                    };
+                    })
+                );
+                    
+                setCommentsWithUsernames(commentsData);
+
+                //###########################################
+
+            } catch (error) {
+                console.error('Error fetching post:', error);
             }
-            else{
-                console.log("el autor y el usuario NO es el mismo!!! :( ",UserIdLogin,"  ",response.author._id);
-            }
-
-            //se almacena en el ESTADO comments  , los comentarios traidos en la respuesta
-            setComments(response.comments);
-
-            setValue("title", response.title);
-            setValue("author", response.author.username);
-            setValue("authorAvatar", response.author.avatarURL);
-            setValue("description", response.description);
-            setValue("imageURL", response.imageURL);
-            setValue("createdAt", formattedDate(response.createdAt));
-            //setValue("completed", response.data.completed);
-            //setValue("comments", response.comments);
-
-            //###########################################
-            // Consulta adicional para obtener usernames de los autores de los comentarios
-            const commentsData = await Promise.all(
-                response.comments.map(async (comment) => {
-                    console.log("###############los usuarios######", comment.author);
-                const userFinded = await getUsertById(comment.author);
-                return {
-                    ...comment,
-                    authorUsername: userFinded.username,
-                    avatarUser: userFinded.avatarURL,
-                };
-                })
-            );
-                
-            setCommentsWithUsernames(commentsData);
-
-            //###########################################
-
-        } catch (error) {
-            console.error('Error fetching post:', error);
-        }
-        };
-
-        fetchData();
-    }, [id, getPostById, setValue]);
-
+            };
+            fetchData();
+        }, [id, getPostById, setValue]);
     //watch se usa para obtener el valor actualizado de imageURL
     //se importa el react-hook-form y se desestructura con useForm
     const imageURL = watch("imageURL");  
@@ -122,7 +131,7 @@ export const PostPrivate= () => {
             <div className="flex h-screen items-center justify-center">
                 <div className=" bg-zinc-800 bg-opacity-25 max-w-md p-8 rounded-md ">
                     <h1 className="text-3xl text-center text-blue-400 font-semibold mb-5 astroFontRegular">VIEW POST</h1>
-                    <form >
+                    
                     <div className="flex items-center space-x-4">
                         <label>Author</label>
                             {authorAvatar && (
@@ -170,7 +179,7 @@ export const PostPrivate= () => {
                             <img
                                 src={imageURL}
                                 alt="Post Image"
-                                className="w-full rounded-md my-2"
+                                className="w-full h-40 rounded-md my-2 object-cover"
                             />
                         )}
 
@@ -190,8 +199,6 @@ export const PostPrivate= () => {
                         {/*bloque botones*/}
                         {canEditAndDelete && (
                         <div className="flex justify-between items-center">
-                            <label>Completed</label>
-                            <input type="checkbox" {...register("completed")} />
                             <button
                                 className="bg-yellow-500 font-semibold px-7 text-antique-500 rounded-sm "
                                 type="submit"
@@ -200,7 +207,8 @@ export const PostPrivate= () => {
                             </button>
                             <button
                                 className="bg-red-500 font-semibold px-7 text-antique-500 rounded-sm "
-                                type="submit"
+                                
+                                onClick={() => handleDelete(id)}    
                             >
                                 Delete
                             </button>
@@ -208,7 +216,7 @@ export const PostPrivate= () => {
                         )}
 
 
-                    </form>
+                    
                 </div>
             </div>
 

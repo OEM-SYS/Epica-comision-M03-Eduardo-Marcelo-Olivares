@@ -48,7 +48,6 @@ export const PostForm= () => {
             title: "",
             description: "",
             imageURL: "",
-            completed: false,
         });  
       };
 
@@ -69,7 +68,7 @@ export const PostForm= () => {
 
                         <input
                             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-                            type="text" 
+                            type="hidden" 
                             placeholder="Author"
                             {...register("author")}
                             value={user.id}
@@ -91,8 +90,6 @@ export const PostForm= () => {
                             autoFocus
                         />
 
-                        <label>Completed</label>
-                        <input type="checkbox" {...register("completed")} />
                         <button
                             className="bg-green-500 font-semibold px-7 text-antique-500 rounded-sm "
                             type="submit"
