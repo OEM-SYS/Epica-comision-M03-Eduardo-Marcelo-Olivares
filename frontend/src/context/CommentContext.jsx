@@ -1,5 +1,5 @@
 import {createContext, useContext, useState} from "react";
-import createCommentReq from "../api/commentAxios";
+import {createCommentReq, deleteCommentReq } from "../api/commentAxios";
 
 const CommentContext = createContext();
 
@@ -23,10 +23,19 @@ export const CommentProvider = ({children})=>{
         //console.log(res);
         return res;
     };
+    // eliminar un comment
+    const deleteComment = async (id) =>{
+        //console.log(comment);
+        const res = await deleteCommentReq(id);
+        //console.log(res);
+        return res;
+    };
+    
     return(
         <CommentContext.Provider value={{
             comment,
             createComment,
+            deleteComment,
         }}>
             {children}
         </CommentContext.Provider>

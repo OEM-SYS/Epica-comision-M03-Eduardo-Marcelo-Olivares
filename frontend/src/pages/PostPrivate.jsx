@@ -56,6 +56,16 @@ export const PostPrivate= () => {
 
     const handleDelete = async (postId) => {
         try {
+        // Obtener los comentarios del post
+        const response = await getPostById(postId);
+        const comments = response.comments;
+
+        // Eliminar cada comentario usando map, ya que comments es un array de id de comentarios
+        await Promise.all(comments.map(async (comment) => {
+            await deleteComment(comment._id);
+        }));
+
+
           // Lógica para eliminar el post (puedes mantener tu función deletePost)
           await deletePost(postId);
     
@@ -68,7 +78,7 @@ export const PostPrivate= () => {
       };
 
 
-      const {createComment }= useComment();
+      const {createComment, deleteComment }= useComment();
 
       const onSubmitComment = (data) => {
         // Agregar el valor de UserIdLogin como author

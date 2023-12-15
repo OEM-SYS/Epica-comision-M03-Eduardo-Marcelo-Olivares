@@ -1,5 +1,5 @@
 import axios from "./setCredentials";
 
-const createCommentReq = (id, comment) => axios.post(`/comment/${id}`, comment);
+export const createCommentReq = (id, comment) => axios.post(`/comment/${id}`, comment);
 
-export default createCommentReq;
+export const deleteCommentReq = (id, comment) => axios.delete(`/comment/${id}`, comment);
