@@ -5,10 +5,17 @@ import {usePosts} from "../context/PostContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState} from "react";
 import {useAuth} from "../context/AuthContext";
+import { useComment} from "../context/CommentContext";
 
 
 export const PostPrivate= () => {
-    const {register, handleSubmit, setValue, reset, watch }=useForm();
+
+    //// Se Añade control para el segundo formulario (comentario)
+    const {register, handleSubmit, setValue, reset, watch, control, }=useForm();
+
+     // Se Añade control para el segundo formulario (comentario)
+    const {register: registerComment, handleSubmit: handleSubmitComment, setValue: setValueComment, control: controlComment,
+        reset: resetCommentForm, } = useForm();
 
     const {user,isAuthenticated, getUsertById }= useAuth();
     //console.log(">>>>>>>>>contenido de user en useAuth>>>>>>>".user);
@@ -60,6 +67,63 @@ export const PostPrivate= () => {
         }
       };
 
+
+      const {createComment }= useComment();
+
+      const onSubmitComment = (data) => {
+        // Agregar el valor de UserIdLogin como author
+        const commentData = {
+            author: UserIdLogin,
+            ...data,
+        };
+        // Llama a la función createComments con el ID del post y los datos del formulario
+        console.log(">>>>>>>datos a modificar en commentario ", commentData);
+        createComments(id, commentData);
+      };
+      /*const createComments= async (postId, comment) => {
+        try{
+            // Lógica para crear comentarios 
+          await createComment(postId, comment);
+        }catch{
+            console.error('Error creating comment:', error.message);
+        }
+      };*/
+      const createComments = async (postId, comment) => {
+        try {
+            // Lógica para crear comentarios
+            await createComment(postId, comment);
+    
+            // Después de crear el comentario, obtén la información actualizada del post
+            const updatedPost = await getPostById(postId);
+    
+            // Actualiza el estado local con los comentarios actualizados
+            setComments(updatedPost.comments);
+    
+            // Actualiza los usernames de los autores de los comentarios
+            const commentsData = await Promise.all(
+                updatedPost.comments.map(async (comment) => {
+                    const userFinded = await getUsertById(comment.author);
+                    return {
+                        ...comment,
+                        authorUsername: userFinded.username,
+                        avatarUser: userFinded.avatarURL,
+                    };
+                })
+            );
+    
+            // Actualiza el estado local con los comentarios y usernames actualizados
+            setCommentsWithUsernames(commentsData);
+
+            // Vacía el textarea restableciendo el formulario
+            resetCommentForm();
+        } catch (error) {
+            console.error('Error creating comment:', error.message);
+        }
+    };
+    
+
+
+
       const onSubmit = (data) => {
         //Desestructuro para filtrar los datos que  no necesito
         const { author, authorAvatar, createdAt, ...postData } = data;
@@ -70,8 +134,8 @@ export const PostPrivate= () => {
 
       const handleUpdate= async (postId, post) => {
         try {
-        console.log(">>>>>>>modificar este post: ",postId);
-          // Lógica para eliminar el post (puedes mantener tu función deletePost)
+            //console.log(">>>>>>>modificar este post: ",postId);
+          // Lógica para eliminar el post 
           await updatePost(postId, post);
     
           // Después de eliminar el post, redirige a /posts
@@ -126,7 +190,7 @@ export const PostPrivate= () => {
                 // Consulta adicional para obtener usernames de los autores de los comentarios
                 const commentsData = await Promise.all(
                     response.comments.map(async (comment) => {
-                        console.log("###############los usuarios######", comment.author);
+                        //console.log("###############los usuarios######", comment.author);
                     const userFinded = await getUsertById(comment.author);
                     return {
                         ...comment,
@@ -282,7 +346,27 @@ export const PostPrivate= () => {
                     <div className=" bg-zinc-800 bg-opacity-70 max-w-2xl p-8 rounded-md ">
                         
                             <h2 className="text-2xl font-semibold text-blue-400 mb-3">Comments</h2>
+                            {UserIdLogin !== "0" && (
+                                <div>
+                                    <form onSubmit={handleSubmitComment(onSubmitComment)}>
 
+                                        <textarea
+                                            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                                            rows="2"
+                                            placeholder="Description"
+                                            {...registerComment("description")}
+                                        ></textarea>
+                                        <button
+                                            type="submit"
+                                            className="bg-green-500 font-semibold px-7 text-antique-500 rounded-sm"
+                                            
+                                        >
+                                            Add Comment
+                                        </button> 
+                                    </form>
+                                    <br/>
+                                </div>
+                            )}
                             <ul>
                             {commentsWithUsernames.map((comment) => (
                                 <li key={comment._id} className="flex items-center">

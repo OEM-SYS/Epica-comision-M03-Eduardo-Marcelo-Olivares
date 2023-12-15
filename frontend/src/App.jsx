@@ -12,12 +12,14 @@ import { AuthProvider } from "./context/AuthContext";
 import Footer from "./components/footer"
 import { PrivateRoutes } from "./routes/PrivateRoutes";
 import { PostProvider } from "./context/PostContext";
+import { CommentProvider} from "./context/CommentContext";
 
 //todos los componentes de adentro prodan acceder al Authprovider (signup, user,isAuthenticated)
 export const App= ()=>{
 return(
   <AuthProvider>
     <PostProvider>
+    <CommentProvider>
     <Router>
         <Routes>
             <Route path="/" element={<Home/>}/>
@@ -40,6 +42,7 @@ return(
         </Routes>
     </Router>
     <Footer />
+    </CommentProvider>
     </PostProvider>
   </AuthProvider>
   
