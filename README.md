@@ -13,6 +13,14 @@ Los apasionados de los viajes astronomicos, con este sitio, tiene un espacio en 
 ### Como esta diseñado?
 La resolución de esta problemática requerió la utilización de tecnologías deprogramación web, como Node.js, Express, MongoDb, Mongoose y React, con el fin dedesarrollar una interfaz intuitiva, funcional y con persistencia de los datos. La personalizacion la interfaz utilizando CSS, Bootstrap y tilewind,.
 
+# ***Atencion***
+### El ***frontend*** funciona en el 
+# ***PORT 3131***
+### El ***backend*** funciona en el
+# ***PORT 3030***
+***En esta version no se pueden cambiar los puertos En un futuro llevaremos los numeros de puerto a la configuracion de sur archivos .env correspondientes,***
+si solamente utilizara el backend y no el frontend si puede cambiar el PORT al numero que ustede desee en el archivo ***.env***
+
 ### Por donde empezar la Instalacion?
 Este sitio contiene dos carpetas
 - Carpeta BACKEND tiene un archivo README.md que explica como hacer para que funcione la API
