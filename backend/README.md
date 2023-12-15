@@ -15,6 +15,14 @@
 - Debes tener Node.js instalado en tu computadora.
 - Tambien dedes tener MongoDB instalado y ejecutar los servicios mongod si deseas inspeccionar la base de datos necesitarás instalar  mongocompass.
 
+# ***Atencion***
+### El ***frontend*** funciona en el 
+# ***PORT 3131***
+### El ***backend*** funciona en el
+# ***PORT 3030***
+***En esta version no se pueden cambiar los puertos En un futuro llevaremos los numeros de puerto a la configuracion de sur archivos .env correspondientes,***
+si solamente utilizara el backend y no el frontend si puede cambiar el PORT al numero que ustede desee en el archivo ***.env***
+
 ### Iniciando la instalacion y configuracion
 - Instala las dependencias del proyecto ejecutando :
 npm install
